@@ -51,7 +51,7 @@ function SideBar() {
 
       <nav
         aria-label="navigation"
-        className="flex flex-1 flex-col gap-16 justify-center py-6 px-3"
+        className="flex flex-1 flex-col gap-8 justify-start py-6 px-3"
       >
         {menuItems.map((item) => {
           const Icon = item.icon;
