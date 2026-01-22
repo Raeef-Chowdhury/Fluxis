@@ -11,6 +11,7 @@ import {
   BookOpen,
   Menu,
   ChevronsLeft,
+  ListCheck,
 } from "lucide-react";
 
 function SideBar() {
@@ -28,6 +29,7 @@ function SideBar() {
     { icon: FileText, label: "Projects", href: "/projects" },
     { icon: BookOpen, label: "Resources", href: "/resources" },
     { icon: Settings, label: "Settings", href: "/settings" },
+    { icon: ListCheck, label: "Tasks", href: "/tasks" },
   ];
 
   return (

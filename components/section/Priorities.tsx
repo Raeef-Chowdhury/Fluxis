@@ -4,7 +4,7 @@ import { IncompletePriorities } from "@/components/cards/IncompletePriorities";
 import { EmptyPriorities } from "../cards/EmptyPriorities";
 function Priorities() {
   return (
-    <section className="mt-[6rem] w-full max-w-[85vw] mx-auto">
+    <section className="mt-32 w-full max-w-[85vw] mx-auto">
       <h2 className="text-[1.8rem] font-semibold tracking-tight text-white text-left ">
         Your Top Priorities
       </h2>{" "}

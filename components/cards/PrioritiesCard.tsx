@@ -24,18 +24,18 @@ export function PrioritiesCard({
       </div>
 
       <div className="flex items-center flex-wrap gap-6  text-sm text-gray-400 mb-4">
-        <span className="text-sm px-2.5 py-1 bg-secondary/10 text-accent/40 rounded font-medium">
+        <span className="text-sm px-2.5 py-1 bg-secondary/10 text-accent/60 rounded font-medium">
           {priority.category}
         </span>
         <div>⋅</div>
-        <span className="flex items-center gap-1.5 text-md text-accent/50">
+        <span className="flex items-center gap-1.5 text-md text-accent/80">
           {priority.dueDate}
         </span>
 
         {priority.estimatedTime && (
           <>
             <div>⋅</div>
-            <span className="flex items-center gap-1.5 text-md text-accent/50">
+            <span className="flex items-center gap-1.5 text-md text-accent/70">
               {priority.estimatedTime}
             </span>
           </>
