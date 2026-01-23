@@ -1,12 +1,20 @@
 "use client";
-import { useState } from "react";
+import { useState, createContext, useContext } from "react";
 interface Todo {
   id: number;
   title: string;
   completed: boolean;
 }
+interface TodoContext {
+  todos: Todo[];
+  addTodo: (title: string) => Todo;
+  toggleTodo: (id: number) => void;
+  deleteTodo: (id: number) => void;
+}
 
-export function useTodos() {
+export const TodoContext = createContext<TodoContext | undefined>(undefined);
+
+export function TodosProvider({ children }: { children: React.ReactNode }) {
   const [todos, setTodos] = useState<Todo[]>([]);
   function addTodo(title: string) {
     const newTodo = {
@@ -27,5 +35,17 @@ export function useTodos() {
   function deleteTodo(id: number) {
     setTodos((prev) => prev.filter((todo) => todo.id !== id));
   }
-  return { todos, addTodo, toggleTodo, deleteTodo };
+
+  return (
+    <TodoContext.Provider value={{ todos, addTodo, toggleTodo, deleteTodo }}>
+      {children}
+    </TodoContext.Provider>
+  );
+}
+export function useTodos() {
+  const context = useContext(TodoContext);
+  if (!context) {
+    throw new Error("useTodos must be used within TodosProvider");
+  }
+  return context;
 }
