@@ -1,38 +1,31 @@
 "use client";
 import { useState, createContext, useContext } from "react";
-interface Todo {
-  id: number;
-  title: string;
-  completed: boolean;
-}
-interface TodoContext {
-  todos: Todo[];
-  addTodo: (title: string) => Todo;
-  toggleTodo: (id: number) => void;
-  deleteTodo: (id: number) => void;
-}
+import { Priority, Todo, TodoContextType } from "@/Types/TodoItemTypes";
 
-export const TodoContext = createContext<TodoContext | undefined>(undefined);
+export const TodoContext = createContext<TodoContextType | undefined>(
+  undefined,
+);
 
 export function TodosProvider({ children }: { children: React.ReactNode }) {
   const [todos, setTodos] = useState<Todo[]>([]);
-  function addTodo(title: string) {
+  function addTodo(title: string, priority: Priority) {
     const newTodo = {
-      id: Date.now() + Math.random(),
+      id: crypto.randomUUID(),
       title: title,
       completed: false,
+      priority: priority,
     };
     setTodos((prev) => [...prev, newTodo]);
     return newTodo;
   }
-  function toggleTodo(id: number) {
+  function toggleTodo(id: string) {
     setTodos((prev) =>
       prev.map((todo) =>
         todo.id === id ? { ...todo, completed: !todo.completed } : todo,
       ),
     );
   }
-  function deleteTodo(id: number) {
+  function deleteTodo(id: string) {
     setTodos((prev) => prev.filter((todo) => todo.id !== id));
   }
 
