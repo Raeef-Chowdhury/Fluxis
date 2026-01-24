@@ -15,6 +15,7 @@ function Tasks() {
     if (!title.trim()) return;
     addTodo(title, priority);
     setTitle("");
+    setPriority("");
   }
   const filteredTodos = todos.filter((todo) => {
     if (filter === "all") return true;
@@ -63,36 +64,36 @@ function Tasks() {
           </select>
           <button
             type="submit"
-            className="bg-cyan-500 hover:bg-cyan-600 text-white font-medium 
+            className="bg-cyan-500 hover:bg-cyan-600 text-black font-medium 
               px-8 py-4 rounded-xl transition-all duration-300 
               hover:scale-105 active:scale-95"
           >
             Add Task
           </button>
         </form>
-        <div className="flex gap-6 mt-6 jsutify-around w-full justify-center mb-24">
+        <div className="flex gap-12 mt-6 jsutify-around w-full justify-center mb-24">
           <button
             onClick={() => setFilter("all")}
-            className={`px-8 ${filter === "all" ? "bg-secondary/60 hover:bg-primary/60" : ""} py-3 bg-primary/20 hover:bg-primary/30 rounded-full hover:scale-105 transition-all  hover:cursor-pointer text-white text-lg`}
+            className={`px-8 ${filter === "all" ? "bg-secondary  hover:bg-primary/80 text-black" : "text-white"} py-3 bg-primary/20 hover:bg-primary/30 rounded-full hover:scale-105 transition-all  hover:cursor-pointer  text-lg`}
           >
             All
           </button>
           <button
             onClick={() => setFilter("active")}
-            className={`px-8 ${filter === "active" ? "bg-secondary/60 hover:bg-primary/60" : ""} py-3 bg-primary/20 hover:bg-primary/30 rounded-full hover:scale-105 transition-all  hover:cursor-pointer text-white text-lg`}
+            className={`px-8 ${filter === "active" ? "bg-secondary hover:bg-primary/80 text-black" : "text-white"} py-3 bg-primary/20 hover:bg-primary/30 rounded-full hover:scale-105 transition-all  hover:cursor-pointer  text-lg`}
           >
             Active
           </button>
           <button
             onClick={() => setFilter("completed")}
-            className={`px-8 ${filter === "completed" ? "bg-secondary/60 hover:bg-primary/60" : ""} py-3 bg-primary/20 hover:bg-primary/30 rounded-full hover:scale-105 transition-all  hover:cursor-pointer text-white text-lg`}
+            className={`px-8 ${filter === "completed" ? "bg-secondary hover:bg-primary/80 text-black" : "text-white"} py-3 bg-primary/20 hover:bg-primary/30 rounded-full hover:scale-105 transition-all  hover:cursor-pointer  text-lg`}
           >
             Completed
           </button>
         </div>
       </div>
 
-      <ul className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 max-w-5xl mx-auto">
+      <ul className="grid grid-cols-3 md:grid-cols-3  gap-12 max-w-6xl mx-auto">
         {filteredTodos.length === 0 ? (
           <div className="col-span-full text-center py-12 text-emerald-400/50">
             {todos.length === 0

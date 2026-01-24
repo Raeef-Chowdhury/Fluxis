@@ -1,13 +1,17 @@
 "use client";
-import { useState, createContext, useContext } from "react";
+import { useState, createContext, useContext, useEffect } from "react";
 import { Priority, Todo, TodoContextType } from "@/Types/TodoItemTypes";
+import { LoadTodo, saveTodos } from "@/utils/Storage";
 
 export const TodoContext = createContext<TodoContextType | undefined>(
   undefined,
 );
 
 export function TodosProvider({ children }: { children: React.ReactNode }) {
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const [todos, setTodos] = useState<Todo[]>(() => LoadTodo());
+  useEffect(() => {
+    saveTodos(todos);
+  }, [todos]);
   function addTodo(title: string, priority: Priority) {
     const newTodo = {
       id: crypto.randomUUID(),
