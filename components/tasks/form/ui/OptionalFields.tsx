@@ -1,4 +1,6 @@
 import { motion } from "framer-motion";
+import { Dispatch, SetStateAction } from "react";
+import { Priority } from "@/Types/TodoItemTypes";
 interface Option {
   value: string;
   label: string;
@@ -15,7 +17,9 @@ export function OptionalField({
 }: {
   label: string;
   value: string;
-  onChange: React.Dispatch<React.SetStateAction<string>>;
+  onChange:
+    | Dispatch<SetStateAction<string>>
+    | Dispatch<SetStateAction<Priority>>;
   type: "text" | "date" | "select";
   options?: { value: string; label: string }[];
   show: boolean;
@@ -23,6 +27,12 @@ export function OptionalField({
   min?: string;
 }) {
   if (!show) return null;
+
+  const handleChange = (newValue: string) => {
+    (onChange as Dispatch<SetStateAction<string | Priority>>)(
+      newValue as string & Priority,
+    );
+  };
 
   return (
     <motion.div
@@ -38,7 +48,7 @@ export function OptionalField({
       {type === "select" ? (
         <select
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={(e) => handleChange(e.target.value)}
           className={` bg-gradient-to-br from-secondary/20 to-primary/10 
             border border-secondary/20 rounded-lg px-3 py-2 text-sm
             text-white focus:outline-none focus:border-secondary/80 
@@ -57,7 +67,7 @@ export function OptionalField({
       ) : (
         <input
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={(e) => handleChange(e.target.value)}
           type={type}
           min={min}
           placeholder={placeholder}

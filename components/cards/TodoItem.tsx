@@ -31,7 +31,7 @@ export function TodoItem({ todo }: { todo: Todo; delay: number }) {
                     transition-all duration-200 
                     hover:shadow-lg hover:shadow-emerald-500/5 
                      hover:-translate-y-0.5
-                    flex items-center gap-3 px-4 py-3 cursor-pointer group`}
+                    flex items-center gap-3 px-4 py-3  group`}
     >
       <label
         className="flex items-center cursor-pointer shrink-0"
@@ -58,9 +58,11 @@ export function TodoItem({ todo }: { todo: Todo; delay: number }) {
       </label>
 
       <span
-        className={`text-md flex-1 truncate ${
-          todo.completed ? "line-through text-white/40" : "text-white"
-        }`}
+        className={`text-md hover:cursor-pointer cursor-text hover:bg-primary/5 hover:border-primary/10 
+    border w-fit border-transparent rounded px-2 py-1 
+    transition-all duration-200 flex-1 truncate ${
+      todo.completed ? "line-through text-white/40" : "text-white"
+    }`}
       >
         {todo.title}
       </span>

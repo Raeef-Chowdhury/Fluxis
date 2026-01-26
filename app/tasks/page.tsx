@@ -4,10 +4,9 @@ import { useTodos } from "@/hooks/TodoItem";
 import { TodoItem } from "@/components/cards/TodoItem";
 import { AnimatePresence } from "framer-motion";
 import OptionalTags from "@/components/tasks/form/ui/OptionalTags";
-import { OptionalField } from "@/components/tasks/form/ui/OptionalField";
+import { OptionalField } from "@/components/tasks/form/ui/OptionalFields";
 import { useTaskForm } from "@/hooks/TodoForm";
-import { Filter } from "@/Types/TodoItemTypes";
-
+import FilterButton from "@/components/tasks/form/ui/FilterButtons";
 function Tasks() {
   const { todos } = useTodos();
   const {
@@ -21,7 +20,7 @@ function Tasks() {
     sortedTodos,
     filter,
     filteredTodos,
-    setFilter,
+    FilterButtons,
   } = useTaskForm();
 
   return (
@@ -77,7 +76,6 @@ function Tasks() {
                     onChange={field.onChange}
                     type={field.type}
                     show={field.show}
-                    width={field.width}
                     options={field.options}
                     placeholder={field.placeholder}
                     min={field.min}
@@ -86,10 +84,9 @@ function Tasks() {
               </div>
             </div>
 
-            {/* SUBMIT */}
             <button
               type="submit"
-              className="bg-secondary/70 hover:bg-secondary/90 text-black font-medium 
+              className="hover:cursor-pointer bg-secondary/70 hover:bg-secondary/90 text-black font-medium 
                 px-6 py-3.5 rounded-lg text-sm transition-all duration-300 
                 hover:scale-105 active:scale-95 shrink-0"
             >
@@ -97,26 +94,17 @@ function Tasks() {
             </button>
           </div>
         </form>
-
-        {/* FILTERS */}
       </div>
-      <div className="flex gap-3 mt-16 mb-24 justify-center">
-        {(["all", "active", "completed"] as Filter[]).map((f) => (
-          <button
-            key={f}
-            onClick={() => setFilter(f)}
-            className={`px-6 py-2.5 rounded-full transition-all text-sm font-medium
-                ${
-                  filter === f
-                    ? "bg-secondary text-black"
-                    : "bg-primary/20 text-white/80 hover:bg-primary/30 hover:text-white"
-                }`}
-          >
-            {f.charAt(0).toUpperCase() + f.slice(1)}
-          </button>
+      <div className="flex gap-8 mt-16 mb-32 justify-center">
+        {FilterButtons.map((button) => (
+          <FilterButton
+            key={button.text}
+            setFilter={button.setFilter}
+            filter={filter}
+            text={button.text}
+          />
         ))}
       </div>
-      {/* TASK LIST */}
       <ul className="flex flex-col gap-12 max-w-3xl mx-auto">
         {filteredTodos.length === 0 ? (
           <div className="text-center py-12 text-emerald-400/50">

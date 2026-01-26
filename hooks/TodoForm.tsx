@@ -2,6 +2,12 @@ import { useState } from "react";
 import { Filter, Priority } from "@/Types/TodoItemTypes";
 import { useTodos } from "./TodoItem";
 import { Flag, Calendar, Tag } from "lucide-react";
+
+interface FilterButtonProps {
+  text: Filter;
+  filter: Filter;
+  setFilter: React.Dispatch<React.SetStateAction<Filter>>;
+}
 export function useTaskForm() {
   const priorityRank = {
     high: 3,
@@ -22,6 +28,23 @@ export function useTaskForm() {
 
   const { todos, addTodo } = useTodos();
   const today = new Date().toISOString().split("T")[0];
+  const FilterButtons: FilterButtonProps[] = [
+    {
+      text: "all",
+      filter: filter,
+      setFilter: setFilter,
+    },
+    {
+      text: "active",
+      filter: filter,
+      setFilter: setFilter,
+    },
+    {
+      text: "completed",
+      filter: filter,
+      setFilter: setFilter,
+    },
+  ];
   const optionalFields = [
     {
       id: "priority",
@@ -136,5 +159,6 @@ export function useTaskForm() {
     filter,
     filteredTodos,
     setFilter,
+    FilterButtons,
   };
 }
