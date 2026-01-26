@@ -79,7 +79,17 @@ export function TodoItem({ todo }: { todo: Todo; delay: number }) {
           {todo.dueDate}
         </span>
       )}
-
+      {todo.tags &&
+        Array.isArray(todo.tags) &&
+        todo.tags.length > 0 &&
+        todo.tags.map((tag, index) => (
+          <span
+            key={index}
+            className={`text-xs px-3 py-1 mr-2 rounded-full ${tag.length < 1 ? "hidden" : ""} font-semibold uppercase tracking-wide shrink-0`}
+          >
+            {tag}
+          </span>
+        ))}
       <button
         onClick={(e) => {
           e.stopPropagation();

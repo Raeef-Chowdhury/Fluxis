@@ -12,13 +12,19 @@ export function TodosProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     saveTodos(todos);
   }, [todos]);
-  function addTodo(title: string, priority: Priority, dueDate: string) {
+  function addTodo(
+    title: string,
+    priority: Priority,
+    dueDate: string,
+    tags: string[],
+  ) {
     const newTodo = {
       id: crypto.randomUUID(),
       title: title,
       completed: false,
       priority: priority,
       dueDate: dueDate,
+      tags: tags,
     };
     setTodos((prev) => [...prev, newTodo]);
     return newTodo;

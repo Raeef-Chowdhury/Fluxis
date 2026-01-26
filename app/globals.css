@@ -53,3 +53,13 @@ html {
     font-size: 108.75%; /* 19px */
   }
 }
+@keyframes slide-in-from-top {
+  from {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
