@@ -1,20 +1,24 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Filter, Priority } from "@/Types/TodoItemTypes";
 import { useTodos } from "./TodoItem";
 import { Flag, Calendar, Tag } from "lucide-react";
 
-interface FilterButtonProps {
+export interface FilterButtonProps {
   text: Filter;
   filter: Filter;
   setFilter: React.Dispatch<React.SetStateAction<Filter>>;
 }
 export function useTaskForm() {
-  const priorityRank = {
-    high: 3,
-    medium: 2,
-    "": 1,
-    low: 0,
-  };
+  const priorityRank = useMemo(
+    () => ({
+      high: 3,
+      medium: 2,
+      "": 1,
+      low: 0,
+    }),
+    [],
+  );
+
   const [title, setTitle] = useState<string>("");
   const [priority, setPriority] = useState<Priority>("");
   const [dueDate, setDueDate] = useState<string>("");
@@ -123,30 +127,38 @@ export function useTaskForm() {
     setShowTags(false);
   }
 
-  const filteredTodos = todos.filter((todo) => {
-    if (filter === "all") return true;
-    if (filter === "completed" && todo.completed) return true;
-    if (filter === "active" && !todo.completed) return true;
-    return false;
-  });
+  const filteredTodos = useMemo(() => {
+    return todos.filter((todo) => {
+      if (filter === "all") return true;
+      if (filter === "completed") return todo.completed;
+      if (filter === "active") return !todo.completed;
+      return false;
+    });
+  }, [todos, filter]);
 
-  const sortedTodos = [...filteredTodos].sort((a, b) => {
-    if (a.completed !== b.completed) {
-      return Number(a.completed) - Number(b.completed);
-    }
-    switch (sortBy) {
-      case "dueDate":
-        const dateA = a.dueDate ? new Date(a.dueDate).getTime() : Infinity;
-        const dateB = b.dueDate ? new Date(b.dueDate).getTime() : Infinity;
-        return dateA - dateB;
-      case "prioritySort":
-        return priorityRank[b.priority || ""] - priorityRank[a.priority || ""];
-      case "alphabetSort":
-        return a.title.localeCompare(b.title);
-      default:
-        return 0;
-    }
-  });
+  const sortedTodos = useMemo(
+    () =>
+      [...filteredTodos].sort((a, b) => {
+        if (a.completed !== b.completed) {
+          return Number(a.completed) - Number(b.completed);
+        }
+        switch (sortBy) {
+          case "dueDate":
+            const dateA = a.dueDate ? new Date(a.dueDate).getTime() : Infinity;
+            const dateB = b.dueDate ? new Date(b.dueDate).getTime() : Infinity;
+            return dateA - dateB;
+          case "prioritySort":
+            return (
+              priorityRank[b.priority || ""] - priorityRank[a.priority || ""]
+            );
+          case "alphabetSort":
+            return a.title.localeCompare(b.title);
+          default:
+            return 0;
+        }
+      }),
+    [filteredTodos, sortBy, priorityRank],
+  );
 
   return {
     title,

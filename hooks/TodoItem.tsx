@@ -8,9 +8,20 @@ export const TodoContext = createContext<TodoContextType | undefined>(
 );
 
 export function TodosProvider({ children }: { children: React.ReactNode }) {
-  const [todos, setTodos] = useState<Todo[]>(() => LoadTodo());
+  const [todos, setTodos] = useState<Todo[]>(() => {
+    try {
+      return LoadTodo();
+    } catch (error) {
+      console.error("Failed to load todos:", error);
+      return [];
+    }
+  });
   useEffect(() => {
-    saveTodos(todos);
+    try {
+      saveTodos(todos);
+    } catch {
+      console.error("Todos aint saving to Localstorage");
+    }
   }, [todos]);
   function addTodo(
     title: string,

@@ -3,7 +3,6 @@ import { Trash, Check, TriangleAlert } from "lucide-react";
 import { Todo } from "@/Types/TodoItemTypes";
 import { motion } from "framer-motion";
 //TODO: COnfirmation toast when todo submitted
-//TODO: Add days left isntead of date and colorcode based on urgency.
 //TODO: inline editing, use onDoubleClick
 //TODO: Fix animations when deleted/checked
 //TODO: Confirmation delete toast once delete?
