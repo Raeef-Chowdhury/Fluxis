@@ -1,7 +1,16 @@
 import { AnimatePresence } from "framer-motion";
 import EmptyState from "@/components/tasks/EmptyState";
 import { TodoItem } from "@/components/cards/TodoItem";
-export function RenderTaskList({ filteredTodos, filter, sortedTodos }) {
+import { Todo } from "@/Types/TodoItemTypes";
+export function RenderTaskList({
+  filteredTodos,
+  filter,
+  sortedTodos,
+}: {
+  filteredTodos: Todo[];
+  filter: string;
+  sortedTodos: Todo[];
+}) {
   return (
     <ul className="flex flex-col gap-12 max-w-3xl mx-auto">
       {filteredTodos.length === 0 ? (

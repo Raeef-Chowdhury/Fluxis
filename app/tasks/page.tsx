@@ -1,13 +1,11 @@
 "use client";
 
-import { useTodos } from "@/hooks/TodoItem";
-import { useTaskForm } from "@/hooks/TodoForm";
+import { useTaskForm } from "@/hooks/Todo/TodoForm";
 import { RenderTaskFilters } from "@/components/tasks/form/RenderTaskFilters";
 import TaskForm from "@/components/tasks/form/RenderTaskForm";
 import { RenderTaskList } from "@/components/tasks/form/RenderTaskList";
 
 function Tasks() {
-  const { todos } = useTodos();
   const {
     title,
     setTitle,
@@ -40,10 +38,10 @@ function Tasks() {
         optionalTags={optionalTags}
       />
       <RenderTaskFilters
+        FilterButtons={FilterButtons}
         filter={filter}
         sortBy={sortBy}
         setSortBy={setSortBy}
-        FilterButtons={FilterButtons}
       />
       <RenderTaskList
         filteredTodos={filteredTodos}

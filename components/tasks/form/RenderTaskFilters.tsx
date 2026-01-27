@@ -1,6 +1,6 @@
 import FilterButton from "@/components/tasks/form/FilterButtons";
 import { TasksSort } from "@/components/tasks/form/TasksSort";
-import { FilterButtonProps } from "@/hooks/TodoForm";
+import { FilterButtonProps } from "@/hooks/Todo/TodoForm";
 export function RenderTaskFilters({
   filter,
   sortBy,

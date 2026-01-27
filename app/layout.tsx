@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist_Mono, Roboto } from "next/font/google";
 import "./globals.css";
 import SideBar from "@/components/layout/sidebar";
-import { TodosProvider } from "@/hooks/TodoItem";
+import { TodosProvider } from "@/hooks/Todo/TodoItem";
 
 const roboto = Roboto({
   weight: ["400", "500", "700"],
