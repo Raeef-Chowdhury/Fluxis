@@ -18,6 +18,8 @@ function Tasks() {
     optionalTags,
     handleSubmit,
     sortedTodos,
+    sortBy,
+    setSortBy,
     filter,
     filteredTodos,
     FilterButtons,
@@ -86,7 +88,7 @@ function Tasks() {
 
             <button
               type="submit"
-              className="hover:cursor-pointer bg-secondary/70 hover:bg-secondary/90 text-black font-medium 
+              className="hover:cursor-pointer bg-secondary/70 hover:bg-secondary/90 text-white font-medium 
                 px-6 py-3.5 rounded-lg text-sm transition-all duration-300 
                 hover:scale-105 active:scale-95 shrink-0"
             >
@@ -95,15 +97,42 @@ function Tasks() {
           </div>
         </form>
       </div>
-      <div className="flex gap-8 mt-16 mb-32 justify-center">
-        {FilterButtons.map((button) => (
-          <FilterButton
-            key={button.text}
-            setFilter={button.setFilter}
-            filter={filter}
-            text={button.text}
-          />
-        ))}
+      <div className="mt-16 mb-48 flex justify-center max-w-5xl  mx-auto">
+        <div className="flex gap-8 w-full ">
+          {FilterButtons.map((button) => (
+            <FilterButton
+              key={button.text}
+              setFilter={button.setFilter}
+              filter={filter}
+              text={button.text}
+            />
+          ))}
+        </div>
+        <select
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value)}
+          className={` text-white from-secondary/20 to-primary/10  bg-gradient-to-br from-secondary/20 to-primary/10 border border-secondary/20 rounded-xl px-4  py-4 text-lg text-white focus:outline-none focus:border-secondary/80 transition-all duration-300 hover:scale-105 cursor-pointer
+`}
+        >
+          <option
+            value="dueDate"
+            className="bg-bg hover:cursor-pointer text-white"
+          >
+            Soring by Due Date...
+          </option>
+          <option
+            value="prioritySort"
+            className="bg-bg hover:cursor-pointer text-white"
+          >
+            Sort by Priority...
+          </option>
+          <option
+            value="alphabetSort"
+            className="bg-bg hover:cursor-pointer text-white"
+          >
+            Sorting Alphabetically
+          </option>
+        </select>
       </div>
       <ul className="flex flex-col gap-12 max-w-3xl mx-auto">
         {filteredTodos.length === 0 ? (

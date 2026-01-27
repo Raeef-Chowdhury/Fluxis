@@ -12,8 +12,8 @@ export function useTaskForm() {
   const priorityRank = {
     high: 3,
     medium: 2,
-    low: 1,
-    "": 0,
+    "": 1,
+    low: 0,
   };
   const [title, setTitle] = useState<string>("");
   const [priority, setPriority] = useState<Priority>("");
@@ -21,11 +21,12 @@ export function useTaskForm() {
   const [tags, setTags] = useState<string>("");
   const [filter, setFilter] = useState<Filter>("all");
 
-  const [showPriority, setShowPriority] = useState(false);
-  const [showDueDate, setShowDueDate] = useState(false);
-  const [showTags, setShowTags] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
+  const [showPriority, setShowPriority] = useState<boolean>(false);
+  const [showDueDate, setShowDueDate] = useState<boolean>(false);
+  const [showTags, setShowTags] = useState<boolean>(false);
+  const [isFocused, setIsFocused] = useState<boolean>(false);
 
+  const [sortBy, setSortBy] = useState<string>("dueDate");
   const { todos, addTodo } = useTodos();
   const today = new Date().toISOString().split("T")[0];
   const FilterButtons: FilterButtonProps[] = [
@@ -133,8 +134,20 @@ export function useTaskForm() {
     if (a.completed !== b.completed) {
       return Number(a.completed) - Number(b.completed);
     }
-    return priorityRank[b.priority ?? ""] - priorityRank[a.priority ?? ""];
+    switch (sortBy) {
+      case "dueDate":
+        const dateA = a.dueDate ? new Date(a.dueDate).getTime() : Infinity;
+        const dateB = b.dueDate ? new Date(b.dueDate).getTime() : Infinity;
+        return dateA - dateB;
+      case "prioritySort":
+        return priorityRank[b.priority || ""] - priorityRank[a.priority || ""];
+      case "alphabetSort":
+        return a.title.localeCompare(b.title);
+      default:
+        return 0;
+    }
   });
+
   return {
     title,
     setTitle,
@@ -160,5 +173,7 @@ export function useTaskForm() {
     filteredTodos,
     setFilter,
     FilterButtons,
+    sortBy,
+    setSortBy,
   };
 }

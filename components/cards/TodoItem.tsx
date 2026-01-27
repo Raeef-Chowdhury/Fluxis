@@ -1,10 +1,23 @@
 import { useTodos } from "@/hooks/TodoItem";
-import { Trash, Check } from "lucide-react";
+import { Trash, Check, TriangleAlert } from "lucide-react";
 import { Todo } from "@/Types/TodoItemTypes";
 import { motion } from "framer-motion";
+//TODO: COnfirmation toast when todo submitted
+//TODO: Add days left isntead of date and colorcode based on urgency.
+//TODO: inline editing, use onDoubleClick
+//TODO: Fix animations when deleted/checked
+//TODO: Confirmation delete toast once delete?
 
 export function TodoItem({ todo }: { todo: Todo; delay: number }) {
   const { toggleTodo, deleteTodo } = useTodos();
+
+  function daysLeft(dueDate: string) {
+    const today = new Date();
+    const due = new Date(dueDate);
+    const difference = due.getTime() - today.getTime();
+    const days = Math.ceil(difference / (1000 * 60 * 60 * 24));
+    return days;
+  }
 
   const priorityColors = {
     high: "bg-high-priority-shade/20 text-high-priority",
@@ -25,85 +38,104 @@ export function TodoItem({ todo }: { todo: Todo; delay: number }) {
       animate={{ opacity: todo.completed ? 0.4 : 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
       transition={{ duration: 0.2 }}
-      className={`bg-gradient-to-br ${todo.completed ? "from-primary/20 to-primary/10 opacity-40" : "from-primary/15 to-primary/5"}
+      className={`bg-gradient-to-br ${todo.completed ? "from-primary/15 to-primary/5 opacity-40" : "from-primary/25 to-primary/10"}
                     rounded-lg
                     ${todo.priority ? priorityBorderColors[todo.priority] : ""}
                     transition-all duration-200 
                     hover:shadow-lg hover:shadow-emerald-500/5 
                      hover:-translate-y-0.5
-                    flex items-center gap-3 px-4 py-3  group`}
+                    flex flex-col gap-2 px-6 py-4 group`}
     >
-      <label
-        className="flex items-center cursor-pointer shrink-0"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <input
-          type="checkbox"
-          checked={todo.completed}
-          onChange={() => toggleTodo(todo.id)}
-          className="peer sr-only"
-        />
-        <div
-          className={`w-6 h-6 border-2 border-accent/60 rounded-md shrink-0
+      <div className="flex items-center gap-3">
+        <label
+          className="flex items-center cursor-pointer shrink-0"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <input
+            type="checkbox"
+            checked={todo.completed}
+            onChange={() => toggleTodo(todo.id)}
+            className="peer sr-only"
+          />
+          <div
+            className={`w-6 h-6 border-2 border-accent/60 rounded-md shrink-0
                         peer-checked:bg-accent peer-checked:border-accent
                         transition-all duration-200 
                         hover:border-accent hover:scale-110
                         flex items-center justify-center
                         shadow-sm`}
-        >
-          {todo.completed && (
-            <Check className="w-4.5 h-4.5 text-black stroke-[3]" />
-          )}
-        </div>
-      </label>
+          >
+            {todo.completed && (
+              <Check className="w-4.5 h-4.5 text-black stroke-[3]" />
+            )}
+          </div>
+        </label>
 
-      <span
-        className={`text-md hover:cursor-pointer cursor-text hover:bg-primary/5 hover:border-primary/10 
+        <span
+          className={`text-lg leading-relaxed tracking-wider hover:cursor-pointer cursor-text hover:bg-primary/5 hover:border-primary/10 
     border w-fit border-transparent rounded px-2 py-1 
     transition-all duration-200 flex-1 truncate ${
       todo.completed ? "line-through text-white/40" : "text-white"
     }`}
-      >
-        {todo.title}
-      </span>
+        >
+          {todo.title}
+        </span>
 
-      {todo.priority && (
-        <span
-          className={`text-xs px-3 py-1 mr-2 rounded-full font-semibold uppercase tracking-wide ${priorityColors[todo.priority]} shrink-0`}
-        >
-          {todo.priority === "medium" ? "MED" : todo.priority}
-        </span>
-      )}
-      {todo.dueDate && (
-        <span
-          className={`text-xs px-3 py-1 mr-2 rounded-full font-semibold uppercase tracking-wide  shrink-0`}
-        >
-          {todo.dueDate}
-        </span>
-      )}
-      {todo.tags &&
-        Array.isArray(todo.tags) &&
-        todo.tags.length > 0 &&
-        todo.tags.map((tag, index) => (
+        {todo.priority && (
           <span
-            key={index}
-            className={`text-xs px-3 py-1 mr-2 rounded-full ${tag.length < 1 ? "hidden" : ""} font-semibold uppercase tracking-wide shrink-0`}
+            className={`text-xs px-3 py-1 mr-2 rounded-full font-semibold uppercase tracking-wide ${priorityColors[todo.priority]} shrink-0`}
           >
-            {tag}
+            {todo.priority === "medium" ? "MED" : todo.priority}
           </span>
-        ))}
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          deleteTodo(todo.id);
-        }}
-        className="opacity-0 group-hover:opacity-100 transition-all shrink-0
+        )}
+
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            deleteTodo(todo.id);
+          }}
+          className="opacity-0 group-hover:opacity-100 transition-all shrink-0
                    text-high-priority hover:cursor-pointer hover:text-high-priority-shade 
                    hover:scale-110 p-1.5 rounded-lg hover:bg-red-500/10"
-        aria-label="Delete task"
-      >
-        <Trash className="w-5 h-5" />
-      </button>
+          aria-label="Delete task"
+        >
+          <Trash className="w-5 h-5" />
+        </button>
+      </div>
+
+      {(todo.dueDate ||
+        (todo.tags && Array.isArray(todo.tags) && todo.tags.length > 0)) && (
+        <div className="flex items-center gap-4 truncate  flex-wrap">
+          {todo.dueDate && (
+            <span
+              className={`text-xs  px-4 py-2 rounded-md ${daysLeft(todo.dueDate) === 0 ? "bg-high-priority/15 text-high-priority border border-high-priority/30" : daysLeft(todo.dueDate) === 1 ? "bg-med-priority/10 border-med-priority/30 border text-med-priority/70" : daysLeft(todo.dueDate) < 0 ? "bg-high-priority/20 border-high-priority-shade text-high-priority" : "bg-white/5 border border-white/10 text-white/70"} font-medium  flex items-center gap-1.5 shrink-0`}
+            >
+              {daysLeft(todo.dueDate) < 0 && (
+                <TriangleAlert className="w-5 h-5 text-high-priority" />
+              )}
+              {(() => {
+                const days = daysLeft(todo.dueDate);
+                if (days === 0) return "Due Today";
+                if (days === 1) return "Due Tomorrow";
+                if (days < 0)
+                  return `Overdue by ${Math.abs(days)} ${days === -1 ? "day" : "days"} `;
+                return `Due in ${days} days`;
+              })()}{" "}
+            </span>
+          )}
+
+          {todo.tags &&
+            Array.isArray(todo.tags) &&
+            todo.tags.slice(0, 3).map((tag, index) => (
+              <span
+                key={index}
+                className={`text-xs px-4 py-1 rounded-md ${tag.length < 1 ? "hidden" : ""} font-medium bg-accent/10 border border-accent/20 text-accent flex items-center gap-1.5 shrink-0`}
+              >
+                {tag}
+              </span>
+            ))}
+        </div>
+      )}
     </motion.li>
   );
 }
