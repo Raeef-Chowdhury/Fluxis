@@ -1,66 +1,63 @@
-import { Priority } from "@/Data/MockPriorities";
 import { PriorityColors } from "@/Data/MockPriorities";
+import { Todo } from "@/Types/TodoItemTypes";
+import { useDaysLeft } from "@/hooks/Todo/useTodoDateConversion";
+import { TriangleAlert } from "lucide-react";
 export function PrioritiesCard({
   colors,
-  priority,
+  todo,
 }: {
   colors: PriorityColors;
-  priority: Priority;
+  todo: Todo;
 }) {
+  const { getDaysLeftText, calculateDaysLeft, isOverdue, getDaysLeftStyles } =
+    useDaysLeft();
+  const daysLeft = todo.dueDate ? calculateDaysLeft(todo.dueDate) : null;
+  console.log(todo.tags);
   return (
     <div
-      key={priority.id}
+      key={todo.id}
       className={`border-l-2 flex flex-col gap-4 ${colors.border} bg-secondary/10 rounded-lg p-8 hover:bg-secondary/20 hover:scale-105 hover:shadow-lg transition-all duration-200 cursor-pointer`}
     >
       <div className="flex items-start justify-between gap-3 mb-4">
-        <h3 className="text-xl font-semibold text-white leading-tight flex-1">
-          {priority.title}
+        <h3 className="text-2xl truncate font-semibold text-white leading-tight capitalize mb-2 flex-1">
+          {todo.title}
         </h3>
-        <span
-          className={`text-md px-4 py-2 ${colors.bg} ${colors.text} rounded font-medium whitespace-nowrap`}
-        >
-          {priority.priority}
-        </span>
-      </div>
-
-      <div className="flex items-center flex-wrap gap-6  text-sm text-gray-400 mb-4">
-        <span className="text-sm px-2.5 py-1 bg-secondary/10 text-accent/60 rounded font-medium">
-          {priority.category}
-        </span>
-        <div>⋅</div>
-        <span className="flex items-center gap-1.5 text-md text-accent/80">
-          {priority.dueDate}
-        </span>
-
-        {priority.estimatedTime && (
-          <>
-            <div>⋅</div>
-            <span className="flex items-center gap-1.5 text-md text-accent/70">
-              {priority.estimatedTime}
-            </span>
-          </>
+        {todo.priority && (
+          <span
+            className={`uppercase text-md px-4 py-2 ${colors.bg} ${colors.text} rounded font-medium whitespace-nowrap`}
+          >
+            {todo.priority}
+          </span>
         )}
       </div>
 
-      <div className="space-y-2">
-        <div className="flex items-center justify-between text-xs">
-          <span className="text-gray-400 text-[0.7rem] font-medium">
-            {priority.type === "project" &&
-            priority.completedSubtasks !== undefined &&
-            priority.totalSubtasks !== undefined
-              ? `${priority.completedSubtasks}/${priority.totalSubtasks} tasks`
-              : "Progress"}
-          </span>
-          <span className={`font-semibold text-lg ${colors.text}`}>
-            {priority.completionRate}%
-          </span>
-        </div>
-        <div className="h-2 bg-black rounded-full overflow-hidden">
-          <div
-            className={`h-full ${colors.progress} rounded-full transition-all duration-500 ease-out`}
-            style={{ width: `${priority.completionRate}%` }}
-          />
-        </div>
+      <div className="flex items-center truncate flex-wrap gap-6  text-sm text-gray-400 mb-4">
+        {todo.tags && todo.tags.length > 1 && (
+          <>
+            {todo.tags.slice(0, 3).map((tag, index) => (
+              <span
+                key={index}
+                className="text-md px-2.5 py-1 bg-secondary/10 text-accent/60 rounded font-medium"
+              >
+                {tag}
+              </span>
+            ))}
+            <div>⋅</div>
+          </>
+        )}
+
+        {daysLeft !== null && (
+          <>
+            {isOverdue(daysLeft) && (
+              <TriangleAlert className="w-5 h-5 text-high-priority" />
+            )}
+            <span
+              className={`flex items-center gap-1.5 text-md ${getDaysLeftStyles(daysLeft)} px-4 py-1  ${isOverdue(daysLeft) ? "text-high-priority" : ""}`}
+            >
+              {getDaysLeftText(daysLeft)}
+            </span>
+          </>
+        )}
       </div>
     </div>
   );

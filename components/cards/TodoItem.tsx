@@ -2,6 +2,7 @@ import { useTodos } from "@/hooks/Todo/TodoItem";
 import { Trash, Check, TriangleAlert } from "lucide-react";
 import { Todo } from "@/Types/TodoItemTypes";
 import { motion } from "framer-motion";
+import { useDaysLeft } from "@/hooks/Todo/useTodoDateConversion";
 //TODO: COnfirmation toast when todo submitted
 //TODO: inline editing, use onDoubleClick
 //TODO: Fix animations when deleted/checked
@@ -9,14 +10,9 @@ import { motion } from "framer-motion";
 
 export function TodoItem({ todo }: { todo: Todo; delay: number }) {
   const { toggleTodo, deleteTodo } = useTodos();
-
-  function daysLeft(dueDate: string) {
-    const today = new Date();
-    const due = new Date(dueDate);
-    const difference = due.getTime() - today.getTime();
-    const days = Math.ceil(difference / (1000 * 60 * 60 * 24));
-    return days;
-  }
+  const { calculateDaysLeft, getDaysLeftText, getDaysLeftStyles, isOverdue } =
+    useDaysLeft();
+  const daysLeft = todo.dueDate ? calculateDaysLeft(todo.dueDate) : null;
 
   const priorityColors = {
     high: "bg-high-priority-shade/20 text-high-priority",
@@ -105,24 +101,16 @@ export function TodoItem({ todo }: { todo: Todo; delay: number }) {
       {(todo.dueDate ||
         (todo.tags && Array.isArray(todo.tags) && todo.tags.length > 0)) && (
         <div className="flex items-center gap-4 truncate  flex-wrap">
-          {todo.dueDate && (
+          {todo.dueDate && daysLeft !== null && (
             <span
-              className={`text-xs  px-4 py-2 rounded-md ${daysLeft(todo.dueDate) === 0 ? "bg-high-priority/15 text-high-priority border border-high-priority/30" : daysLeft(todo.dueDate) === 1 ? "bg-med-priority/10 border-med-priority/30 border text-med-priority/70" : daysLeft(todo.dueDate) < 0 ? "bg-high-priority/20 border-high-priority-shade text-high-priority" : "bg-white/5 border border-white/10 text-white/70"} font-medium  flex items-center gap-1.5 shrink-0`}
+              className={`text-xs px-4 py-2 rounded-md ${getDaysLeftStyles(daysLeft)} font-medium flex items-center gap-1.5 shrink-0`}
             >
-              {daysLeft(todo.dueDate) < 0 && (
+              {isOverdue(daysLeft) && (
                 <TriangleAlert className="w-5 h-5 text-high-priority" />
               )}
-              {(() => {
-                const days = daysLeft(todo.dueDate);
-                if (days === 0) return "Due Today";
-                if (days === 1) return "Due Tomorrow";
-                if (days < 0)
-                  return `Overdue by ${Math.abs(days)} ${days === -1 ? "day" : "days"} `;
-                return `Due in ${days} days`;
-              })()}{" "}
+              {getDaysLeftText(daysLeft)}
             </span>
           )}
-
           {todo.tags &&
             Array.isArray(todo.tags) &&
             todo.tags.slice(0, 3).map((tag, index) => (

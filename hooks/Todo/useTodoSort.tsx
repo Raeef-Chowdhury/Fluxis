@@ -1,7 +1,7 @@
 import { Todo, Priority } from "@/Types/TodoItemTypes";
 import { useMemo } from "react";
 
-const PRIORITY_RANK: Record<Priority | "", number> = {
+export const PRIORITY_RANK: Record<Priority | "", number> = {
   high: 3,
   medium: 2,
   "": 1,

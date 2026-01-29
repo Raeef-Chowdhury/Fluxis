@@ -3,6 +3,7 @@ import { Geist_Mono, Roboto } from "next/font/google";
 import "./globals.css";
 import SideBar from "@/components/layout/sidebar";
 import { TodosProvider } from "@/hooks/Todo/TodoItem";
+import { DaysLeftProvider } from "@/hooks/Todo/useTodoDateConversion";
 
 const roboto = Roboto({
   weight: ["400", "500", "700"],
@@ -32,7 +33,9 @@ export default function RootLayout({
       >
         <SideBar />
         <main id="main-content" className="transition-all">
-          <TodosProvider>{children}</TodosProvider>
+          <DaysLeftProvider>
+            <TodosProvider>{children}</TodosProvider>
+          </DaysLeftProvider>
         </main>
       </body>
     </html>
