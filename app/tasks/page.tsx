@@ -4,6 +4,7 @@ import { useTaskForm } from "@/hooks/Todo/TodoForm";
 import { RenderTaskFilters } from "@/components/tasks/form/RenderTaskFilters";
 import TaskForm from "@/components/tasks/form/RenderTaskForm";
 import { RenderTaskList } from "@/components/tasks/form/RenderTaskList";
+import { TasksStats } from "@/components/tasks/stats/TasksStats";
 
 function Tasks() {
   const {
@@ -27,7 +28,7 @@ function Tasks() {
       <h1 className="tracking-tight text-5xl font-bold text-center mb-12">
         Tasks
       </h1>
-
+      <TasksStats />
       <TaskForm
         handleSubmit={handleSubmit}
         title={title}

@@ -1,5 +1,5 @@
 import { AnimatePresence } from "framer-motion";
-import EmptyState from "@/components/tasks/EmptyState";
+import EmptyState from "@/components/Fallback/EmptyState";
 import { TodoItem } from "@/components/cards/TodoItem";
 import { Todo } from "@/Types/TodoItemTypes";
 export function RenderTaskList({
