@@ -1,68 +1,98 @@
+"use client";
 import { Todo } from "@/Types/TodoItemTypes";
 import { X } from "lucide-react";
-export function TodoModal({ todo }: { todo: Todo }) {
+import { Dispatch, SetStateAction } from "react";
+import { motion } from "framer-motion";
+
+export function TodoModal({
+  todo,
+  onClose,
+}: {
+  todo: Todo;
+  onClose: Dispatch<SetStateAction<string | null>>;
+}) {
   return (
     <>
-      <div className="fixed  inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
-        <div className="bg-emerald-950 border border-primary/30 rounded-xl shadow-2xl max-w-2xl w-full  overflow-y-auto pointer-events-auto">
-          <div className="flex items-start relative justify-between p-8 border-b border-primary/20">
-            <div className="flex-1 relative pr-6 line-clamp-6">
-              <h2 className="text-2xl break-words font-semibold mb-6 tracking-tight text-white ">
-                {todo.title}
-              </h2>
+      <motion.div
+        initial={{ opacity: 0, y: -15 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -15 }}
+        transition={{ duration: 0.25 }}
+        className="fixed inset-0 z-50 flex  items-center justify-center p-4 pointer-events-none"
+      >
+        <div className="bg-gradient-to-br from-emerald-950 to-emerald-900/95 border border-primary/40 rounded-2xl shadow-2xl max-w-2xl w-full overflow-hidden pointer-events-auto backdrop-blur-sm">
+          {/* Header Section */}
+          <div className="relative p-8 pb-6">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex-1 min-w-0">
+                <h2 className="text-3xl font-bold text-white leading-tight mb-1 break-words">
+                  {todo.title}
+                </h2>
+              </div>
 
-              {todo.tags && todo.tags.length > 0 && (
-                <div className="flex flex-wrap gap-2.5 mt-4">
-                  {todo.tags.map((tag, index) => (
-                    <span
-                      key={index}
-                      className="px-4 py-1.5 truncate bg-accent/15 text-accent border border-accent/30 text-sm rounded-full font-medium"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
+              <button
+                onClick={() => onClose(null)}
+                className="text-white/40 hover:text-high-priority hover:bg-high-priority/30 transition-all duration-200 flex-shrink-0 rounded-lg p-2 group"
+                type="button"
+              >
+                <X
+                  className="w-6 h-6 group-hover:cursor-pointer transition-transform duration-200"
+                  strokeWidth={2.5}
+                />
+              </button>
             </div>
 
-            <button
-              className="text-white/50  hover:text-high-priority hover:bg-high-priority/20 hover:cursor-pointer transition-all duration-200 flex-shrink-0 rounded-lg p-2"
-              type="button"
-            >
-              <X className="w-6 h-6" strokeWidth={2} />
-            </button>
-          </div>
-
-          <div className="p-8">
-            {/* Due Date */}
-            {todo.dueDate && (
-              <div className="flex items-center gap-3 text-gray-300 bg-gray-800 border border-primary/25 rounded-lg p-5">
-                <svg
-                  className="w-5 h-5 text-primary flex-shrink-0"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
-                </svg>
-                <span className="text-sm font-medium">
-                  Due:{" "}
-                  {new Date(todo.dueDate).toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "numeric",
-                    year: "numeric",
-                  })}
-                </span>
+            {/* Tags Section */}
+            {todo.tags && todo.tags.length > 0 && (
+              <div className="flex flex-wrap gap-2 mt-5">
+                {todo.tags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="px-3 py-1.5 truncate bg-accent/20 text-accent border border-accent/40 text-xs rounded-full font-semibold tracking-wide uppercase backdrop-blur-sm"
+                  >
+                    {tag}
+                  </span>
+                ))}
               </div>
             )}
           </div>
+
+          {/* Due Date Section */}
+          {todo.dueDate && (
+            <div className="px-8 pb-8">
+              <div className="flex items-center gap-3 text-white/90 bg-emerald-900/50 border border-primary/30 rounded-xl p-5 backdrop-blur-sm">
+                <div className="flex-shrink-0 w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center">
+                  <svg
+                    className="w-5 h-5 text-primary"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2.5}
+                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <div className="text-xs text-white/60 font-medium uppercase tracking-wider mb-0.5">
+                    Due Date
+                  </div>
+                  <div className="text-base font-semibold">
+                    {new Date(todo.dueDate).toLocaleDateString("en-US", {
+                      month: "long",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
-      </div>
+      </motion.div>
     </>
   );
 }

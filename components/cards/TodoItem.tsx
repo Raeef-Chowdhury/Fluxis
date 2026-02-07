@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { useDaysLeft } from "@/hooks/Todo/useTodoDateConversion";
 import { TodoModal } from "../tasks/item/TodoModal";
 import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
 //TODO: COnfirmation toast when todo submitted
 //TODO: inline editing, use onDoubleClick
 //TODO: Fix animations when deleted/checked
@@ -129,19 +130,22 @@ export function TodoItem({ todo }: { todo: Todo; delay: number }) {
           </div>
         )}
       </motion.li>{" "}
-      {modalId === todo.id && (
-        <div
-          className="fixed top-0 left-0 w-screen h-screen bg-black/60 backdrop-blur-sm flex items-center justify-center z-50"
-          onClick={() => setModalId(null)}
-        >
+      <AnimatePresence>
+        {modalId === todo.id && (
           <div
-            className="bg-white rounded-lg p-6 max-w-md w-full"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed top-0 left-0 w-screen h-screen bg-black/60 backdrop-blur-sm flex items-center justify-center z-50"
+            onClick={() => setModalId(null)}
           >
-            <TodoModal todo={todo} />
+            {" "}
+            <div
+              className="bg-white max-w-md w-full"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <TodoModal todo={todo} onClose={setModalId} />
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
     </>
   );
 }
