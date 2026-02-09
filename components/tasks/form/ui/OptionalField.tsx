@@ -1,18 +1,17 @@
 import { motion } from "framer-motion";
 import { Dispatch, SetStateAction } from "react";
 import { Priority } from "@/Types/TodoItemTypes";
-
 interface Option {
   value: string;
   label: string;
 }
-
 export function OptionalField({
   label,
   value,
   onChange,
   type,
   options,
+  show,
   placeholder,
   min,
 }: {
@@ -27,18 +26,18 @@ export function OptionalField({
   placeholder?: string;
   min?: string;
 }) {
+  if (!show) return null;
   const handleChange = (newValue: string) => {
     (onChange as Dispatch<SetStateAction<string | Priority>>)(
       newValue as string & Priority,
     );
   };
-
   return (
     <motion.div
-      initial={{ y: -20, opacity: 0 }}
+      initial={{ y: -50, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      exit={{ y: -20, opacity: 0 }}
-      transition={{ duration: 0.2 }}
+      exit={{ y: -50, opacity: 0 }}
+      transition={{ duration: 0.3 }}
     >
       <label className="text-[11px] mt-4 text-white/40 mb-1 block ml-1">
         {label}
@@ -48,10 +47,10 @@ export function OptionalField({
         <select
           value={value}
           onChange={(e) => handleChange(e.target.value)}
-          className="bg-gradient-to-br from-secondary/20 to-primary/10 
+          className={` bg-gradient-to-br from-secondary/20 to-primary/10 
             border border-secondary/20 rounded-lg px-3 py-2 text-sm
             text-white focus:outline-none focus:border-secondary/80 
-            transition-all duration-200"
+            transition-all duration-200`}
         >
           {options?.map((option: Option) => (
             <option
@@ -70,11 +69,11 @@ export function OptionalField({
           type={type}
           min={min}
           placeholder={placeholder}
-          className="bg-gradient-to-br from-secondary/20 to-primary/10 
+          className={` bg-gradient-to-br from-secondary/20 to-primary/10 
             border border-secondary/20 rounded-lg px-3 py-2 text-sm
             text-white placeholder:text-primary/30
             focus:outline-none focus:border-secondary/80 
-            transition-all duration-200"
+            transition-all duration-200`}
         />
       )}
     </motion.div>
