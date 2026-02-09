@@ -44,39 +44,18 @@ export function OptionalField({
         {label}
       </label>
 
-      {type === "select" ? (
-        <select
-          value={value}
-          onChange={(e) => handleChange(e.target.value)}
-          className="bg-gradient-to-br from-secondary/20 to-primary/10 
-            border border-secondary/20 rounded-lg px-3 py-2 text-sm
-            text-white focus:outline-none focus:border-secondary/80 
-            transition-all duration-200"
-        >
-          {options?.map((option: Option) => (
-            <option
-              key={option.value}
-              value={option.value}
-              className="bg-bg text-white"
-            >
-              {option.label}
-            </option>
-          ))}
-        </select>
-      ) : (
-        <input
-          value={value}
-          onChange={(e) => handleChange(e.target.value)}
-          type={type}
-          min={min}
-          placeholder={placeholder}
-          className="bg-gradient-to-br from-secondary/20 to-primary/10 
+      <input
+        value={value}
+        onChange={(e) => handleChange(e.target.value)}
+        type={type}
+        min={min}
+        placeholder={placeholder}
+        className="bg-gradient-to-br from-secondary/20 to-primary/10 
             border border-secondary/20 rounded-lg px-3 py-2 text-sm
             text-white placeholder:text-primary/30
             focus:outline-none focus:border-secondary/80 
             transition-all duration-200"
-        />
-      )}
+      />
     </motion.div>
   );
 }

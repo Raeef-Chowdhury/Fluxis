@@ -21,6 +21,10 @@ function Tasks() {
     filter,
     filteredTodos,
     FilterButtons,
+    priority,
+    setPriority,
+    setDueDate,
+    dueDate,
   } = useTaskForm();
 
   return (
@@ -37,6 +41,10 @@ function Tasks() {
         isFocused={isFocused}
         optionalFields={optionalFields}
         optionalTags={optionalTags}
+        priority={priority}
+        setPriority={setPriority}
+        dueDate={dueDate}
+        setDueDate={setDueDate}
       />
       <RenderTaskFilters
         FilterButtons={FilterButtons}

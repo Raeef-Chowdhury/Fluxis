@@ -36,7 +36,6 @@ export function AddTask({
           value={text}
           onChange={(e) => setTitle(e.target.value)}
           onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
           placeholder="Add a new task..."
           className="w-[85%] bg-gradient-to-br from-secondary/15 to-primary/10
             border border-secondary/20 rounded-xl px-5 py-3.5 text-base

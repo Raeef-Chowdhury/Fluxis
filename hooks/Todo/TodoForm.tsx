@@ -17,8 +17,6 @@ export function useTaskForm() {
   const [tags, setTags] = useState<string>("");
   const [filter, setFilter] = useState<Filter>("all");
 
-  const [showPriority, setShowPriority] = useState<boolean>(false);
-  const [showDueDate, setShowDueDate] = useState<boolean>(false);
   const [showTags, setShowTags] = useState<boolean>(false);
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
@@ -27,7 +25,6 @@ export function useTaskForm() {
   const filteredTodos = useTodoFilter({ todos, filter });
   const sortedTodos = useTodoSort({ todos: filteredTodos, sortBy });
 
-  const today = new Date().toISOString().split("T")[0];
   const FilterButtons: FilterButtonProps[] = [
     {
       text: "all",
@@ -47,31 +44,6 @@ export function useTaskForm() {
   ];
   const optionalFields = [
     {
-      id: "priority",
-      label: "Priority",
-      type: "select" as const,
-      width: "w-48",
-      value: priority,
-      onChange: setPriority,
-      show: showPriority,
-      options: [
-        { value: "", label: "No priority" },
-        { value: "low", label: "Low" },
-        { value: "medium", label: "Medium" },
-        { value: "high", label: "High" },
-      ],
-    },
-    {
-      id: "dueDate",
-      label: "Due date",
-      type: "date" as const,
-      width: "w-56",
-      value: dueDate,
-      onChange: setDueDate,
-      show: showDueDate,
-      min: today,
-    },
-    {
       id: "tags",
       label: "Tags",
       type: "text" as const,
@@ -83,21 +55,6 @@ export function useTaskForm() {
     },
   ];
   const optionalTags = [
-    {
-      id: "priority",
-      label: "Priority",
-      icon: Flag,
-      state: showPriority,
-      setter: setShowPriority,
-    },
-
-    {
-      id: "dueDate",
-      label: "Due Date",
-      icon: Calendar,
-      state: showDueDate,
-      setter: setShowDueDate,
-    },
     {
       id: "tags",
       label: "Tags",
@@ -117,8 +74,6 @@ export function useTaskForm() {
     setPriority("");
     setDueDate("");
     setTags("");
-    setShowPriority(false);
-    setShowDueDate(false);
     setShowTags(false);
   }
 
@@ -137,5 +92,9 @@ export function useTaskForm() {
     FilterButtons,
     filteredTodos,
     sortedTodos,
+    priority,
+    setPriority,
+    dueDate,
+    setDueDate,
   };
 }
