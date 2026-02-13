@@ -3,7 +3,8 @@ import { Todo } from "@/Types/TodoItemTypes";
 import { X } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
 import { motion } from "framer-motion";
-
+import { useInlineEditingText } from "@/hooks/useInlineEditingText";
+import { useTodos } from "@/hooks/Todo/TodoItem";
 export function TodoModal({
   todo,
   onClose,
@@ -11,6 +12,35 @@ export function TodoModal({
   todo: Todo;
   onClose: Dispatch<SetStateAction<string | null>>;
 }) {
+  const { onUpdateTodo } = useTodos();
+  const {
+    isEditing,
+    curText,
+    inputRef,
+    handleDoubleClick,
+    handleBlur,
+    handleChange,
+    handleKeyDown,
+  } = useInlineEditingText({
+    text: todo.title,
+  });
+
+  const handleSaveTitle = () => {
+    handleBlur();
+
+    if (curText.trim() !== todo.title && curText.trim() !== "") {
+      onUpdateTodo(todo.id, { title: curText.trim() });
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    handleKeyDown(e); // Handle Enter/Escape
+
+    if (e.key === "Enter" && curText.trim() !== "") {
+      onUpdateTodo(todo.id, { title: curText.trim() });
+    }
+  };
+
   return (
     <>
       <motion.div
@@ -18,16 +48,34 @@ export function TodoModal({
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -15 }}
         transition={{ duration: 0.25 }}
-        className="fixed inset-0 z-50 flex  items-center justify-center p-4 pointer-events-none"
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
       >
         <div className="bg-gradient-to-br from-emerald-950 to-emerald-900/95 border border-primary/40 rounded-2xl shadow-2xl max-w-2xl w-full overflow-hidden pointer-events-auto backdrop-blur-sm">
           {/* Header Section */}
           <div className="relative p-8 pb-6">
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1 min-w-0">
-                <h2 className="text-3xl font-bold text-white leading-tight mb-1 break-words">
-                  {todo.title}
-                </h2>
+                {isEditing ? (
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    defaultValue={todo.title}
+                    value={curText}
+                    onChange={handleChange}
+                    onBlur={handleSaveTitle}
+                    onKeyDown={handleKeyPress}
+                    className="text-3xl font-bold text-white leading-tight mb-1 bg-emerald-800/50 border-2 border-primary/60 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                    placeholder="Enter todo title..."
+                  />
+                ) : (
+                  <h2
+                    onClick={handleDoubleClick}
+                    className="text-3xl font-bold text-white leading-tight mb-1 break-words hover:cursor-pointer transition-all hover:bg-emerald-800/30 rounded-lg px-3 py-2"
+                    title="Double-click to edit"
+                  >
+                    {todo.title}
+                  </h2>
+                )}
               </div>
 
               <button

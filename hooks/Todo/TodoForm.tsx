@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Filter, Priority } from "@/Types/TodoItemTypes";
 import { useTodos } from "./TodoItem";
-import { Flag, Calendar, Tag } from "lucide-react";
+import { Tag } from "lucide-react";
 import { useTodoSort } from "./useTodoSort";
 import { useTodoFilter } from "./useTodoFilter";
 

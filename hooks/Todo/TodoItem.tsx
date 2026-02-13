@@ -40,6 +40,13 @@ export function TodosProvider({ children }: { children: React.ReactNode }) {
     setTodos((prev) => [...prev, newTodo]);
     return newTodo;
   }
+  const onUpdateTodo = (todoId: string, updates: Partial<Todo>) => {
+    setTodos((prevTodos) =>
+      prevTodos.map((todo) =>
+        todo.id === todoId ? { ...todo, ...updates } : todo,
+      ),
+    );
+  };
   function toggleTodo(id: string) {
     setTodos((prev) =>
       prev.map((todo) =>
@@ -52,7 +59,9 @@ export function TodosProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <TodoContext.Provider value={{ todos, addTodo, toggleTodo, deleteTodo }}>
+    <TodoContext.Provider
+      value={{ todos, addTodo, toggleTodo, deleteTodo, onUpdateTodo }}
+    >
       {children}
     </TodoContext.Provider>
   );

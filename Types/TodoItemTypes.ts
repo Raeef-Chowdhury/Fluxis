@@ -19,6 +19,7 @@ export interface TodoContextType {
   ) => Todo;
   toggleTodo: (id: string) => void;
   deleteTodo: (id: string) => void;
+  onUpdateTodo: (todoId: string, updates: Partial<Todo>) => void;
 }
 export interface PriorityColors {
   high: string;
