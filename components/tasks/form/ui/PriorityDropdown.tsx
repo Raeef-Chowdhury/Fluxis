@@ -1,11 +1,10 @@
-import { SetString } from "@/Types/PropTypes";
 import { ChevronUp } from "lucide-react";
 export function DueDateForm({
   priority,
   setPriority,
 }: {
   priority: string;
-  setPriority: SetString;
+  setPriority: React.Dispatch<React.SetStateAction<string>>;
 }) {
   return (
     <div className="relative">

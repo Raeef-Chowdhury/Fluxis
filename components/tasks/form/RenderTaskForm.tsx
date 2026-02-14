@@ -5,6 +5,7 @@ import { DueDateForm } from "@/components/tasks/form/ui/PriorityDropdown";
 import { motion, AnimatePresence } from "framer-motion";
 import { DueDateCalendar } from "./ui/DueDateCalendar";
 import { SetBoolean, SetString } from "@/Types/PropTypes";
+
 import { OptionalTagsType, OptionalFieldsType } from "@/Types/TodoFormTypes";
 function TaskForm({
   handleSubmit,
@@ -27,7 +28,7 @@ function TaskForm({
   optionalFields: OptionalFieldsType[];
   optionalTags: OptionalTagsType[];
   priority: string;
-  setPriority: SetString;
+  setPriority: React.Dispatch<React.SetStateAction<string>>;
   dueDate: string;
   setDueDate: SetString;
 }) {

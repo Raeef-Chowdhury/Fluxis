@@ -11,7 +11,7 @@ import {
 } from "@/Types/TodoFormTypes";
 export function useTaskForm() {
   const [title, setTitle] = useState<string>("");
-  const [priority, setPriority] = useState<Priority>("");
+  const [priority, setPriority] = useState<string>("");
   const [dueDate, setDueDate] = useState<string>("");
   const [tags, setTags] = useState<string>("");
   const [filter, setFilter] = useState<Filter>("all");
@@ -67,7 +67,7 @@ export function useTaskForm() {
     if (!title.trim()) return;
 
     const tagsArray = tags.split(",").map((tag) => tag.trim());
-    addTodo(title, priority, dueDate, tagsArray);
+    addTodo(title, priority as Priority, dueDate, tagsArray);
 
     setTitle("");
     setPriority("");
