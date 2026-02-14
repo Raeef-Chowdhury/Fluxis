@@ -1,7 +1,6 @@
 "use client";
 import { Todo } from "@/Types/TodoItemTypes";
 import { X } from "lucide-react";
-import { Dispatch, SetStateAction } from "react";
 import { motion } from "framer-motion";
 import { useInlineEditingText } from "@/hooks/useInlineEditingText";
 import { useTodos } from "@/hooks/Todo/TodoItem";
@@ -10,7 +9,7 @@ export function TodoModal({
   onClose,
 }: {
   todo: Todo;
-  onClose: Dispatch<SetStateAction<string | null>>;
+  onClose: () => void;
 }) {
   const { onUpdateTodo } = useTodos();
   const {
@@ -59,7 +58,6 @@ export function TodoModal({
                   <input
                     ref={inputRef}
                     type="text"
-                    defaultValue={todo.title}
                     value={curText}
                     onChange={handleChange}
                     onBlur={handleSaveTitle}

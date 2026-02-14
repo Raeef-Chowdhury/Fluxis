@@ -4,12 +4,11 @@ import { useTodos } from "./TodoItem";
 import { Tag } from "lucide-react";
 import { useTodoSort } from "./useTodoSort";
 import { useTodoFilter } from "./useTodoFilter";
-
-export interface FilterButtonProps {
-  text: Filter;
-  filter: Filter;
-  setFilter: React.Dispatch<React.SetStateAction<Filter>>;
-}
+import {
+  FilterButtonProps,
+  OptionalFieldsType,
+  OptionalTagsType,
+} from "@/Types/TodoFormTypes";
 export function useTaskForm() {
   const [title, setTitle] = useState<string>("");
   const [priority, setPriority] = useState<Priority>("");
@@ -42,7 +41,7 @@ export function useTaskForm() {
       setFilter: setFilter,
     },
   ];
-  const optionalFields = [
+  const optionalFields: OptionalFieldsType[] = [
     {
       id: "tags",
       label: "Tags",
@@ -54,7 +53,7 @@ export function useTaskForm() {
       placeholder: "work, urgent, personal...",
     },
   ];
-  const optionalTags = [
+  const optionalTags: OptionalTagsType[] = [
     {
       id: "tags",
       label: "Tags",

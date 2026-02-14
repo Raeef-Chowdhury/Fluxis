@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import { Dispatch, SetStateAction } from "react";
 import { Priority } from "@/Types/TodoItemTypes";
+import { SetPriority, SetString } from "@/Types/PropTypes";
 interface Option {
   value: string;
   label: string;
@@ -17,9 +17,7 @@ export function OptionalField({
 }: {
   label: string;
   value: string;
-  onChange:
-    | Dispatch<SetStateAction<string>>
-    | Dispatch<SetStateAction<Priority>>;
+  onChange: SetString | SetPriority;
   type: "text" | "date" | "select";
   options?: { value: string; label: string }[];
   show: boolean;
@@ -28,9 +26,7 @@ export function OptionalField({
 }) {
   if (!show) return null;
   const handleChange = (newValue: string) => {
-    (onChange as Dispatch<SetStateAction<string | Priority>>)(
-      newValue as string & Priority,
-    );
+    (onChange as SetString | SetPriority)(newValue as string & Priority);
   };
   return (
     <motion.div

@@ -1,10 +1,11 @@
 import OptionalTags from "@/components/tasks/form/OptionalTags";
 import { OptionalField } from "@/components/tasks/form/OptionalFields";
 import { AddTask } from "./AddTaskInput";
-import { Dispatch, SetStateAction } from "react";
 import { DueDateForm } from "@/components/tasks/form/ui/PriorityDropdown";
 import { motion, AnimatePresence } from "framer-motion";
 import { DueDateCalendar } from "./ui/DueDateCalendar";
+import { SetBoolean, SetString } from "@/Types/PropTypes";
+import { OptionalTagsType, OptionalFieldsType } from "@/Types/TodoFormTypes";
 function TaskForm({
   handleSubmit,
   title,
@@ -18,17 +19,17 @@ function TaskForm({
   dueDate,
   setDueDate,
 }: {
-  handleSubmit: any;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   title: string;
-  setTitle: Dispatch<SetStateAction<string>>;
-  setIsFocused: Dispatch<SetStateAction<boolean>>;
+  setTitle: SetString;
+  setIsFocused: SetBoolean;
   isFocused: boolean;
-  optionalFields: any[];
-  optionalTags: any[];
+  optionalFields: OptionalFieldsType[];
+  optionalTags: OptionalTagsType[];
   priority: string;
-  setPriority: Dispatch<SetStateAction<string>>;
+  setPriority: SetString;
   dueDate: string;
-  setDueDate: Dispatch<SetStateAction<string>>;
+  setDueDate: SetString;
 }) {
   return (
     <div

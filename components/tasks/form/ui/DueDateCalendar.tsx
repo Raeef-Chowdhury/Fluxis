@@ -1,10 +1,11 @@
-import { SetStateAction, Dispatch } from "react";
+import { SetString } from "@/Types/PropTypes";
+
 export function DueDateCalendar({
   dueDate,
   setDueDate,
 }: {
   dueDate: string;
-  setDueDate: Dispatch<SetStateAction<string>>;
+  setDueDate: SetString;
 }) {
   return (
     <input

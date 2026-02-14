@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { SetString, SetBoolean } from "@/Types/PropTypes";
 
 export function AddTask({
   text,
@@ -7,8 +7,8 @@ export function AddTask({
   setIsFocused,
 }: {
   text: string;
-  setTitle: Dispatch<SetStateAction<string>>;
-  setIsFocused: Dispatch<SetStateAction<boolean>>;
+  setTitle: SetString;
+  setIsFocused: SetBoolean;
 }) {
   const maxChars = 150;
   const textLength = text.length;
