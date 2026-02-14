@@ -77,7 +77,7 @@ export function TodoModal({
               </div>
 
               <button
-                onClick={() => onClose(null)}
+                onClick={onClose}
                 className="text-white/40 hover:text-high-priority hover:bg-high-priority/30 transition-all duration-200 flex-shrink-0 rounded-lg p-2 group"
                 type="button"
               >

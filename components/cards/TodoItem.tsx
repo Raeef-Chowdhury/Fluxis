@@ -141,7 +141,7 @@ export function TodoItem({ todo }: { todo: Todo; delay: number }) {
               className="bg-white max-w-md w-full"
               onClick={(e) => e.stopPropagation()}
             >
-              <TodoModal todo={todo} onClose={setModalId} />
+              <TodoModal todo={todo} onClose={() => setModalId(null)} />
             </div>
           </div>
         )}
