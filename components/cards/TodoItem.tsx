@@ -1,6 +1,6 @@
 "use client";
 import { useTodos } from "@/hooks/Todo/TodoItem";
-import { Trash, Check, TriangleAlert } from "lucide-react";
+import { Trash, Check, TriangleAlert, Clock } from "lucide-react";
 import { Todo } from "@/Types/TodoItemTypes";
 import { motion } from "framer-motion";
 import { useDaysLeft } from "@/hooks/Todo/useTodoDateConversion";
@@ -40,7 +40,7 @@ export function TodoItem({ todo }: { todo: Todo; delay: number }) {
         exit={{ opacity: 0, y: -10 }}
         transition={{ duration: 0.2 }}
         onClick={() => setModalId(todo.id)}
-        className={`bg-gradient-to-br ${todo.completed ? "from-primary/15 to-primary/5 opacity-40" : "from-primary/25 to-primary/10"}
+        className={`bg-gradient-to-br ${todo.completed ? "from-primary/15 to-primary/5 opacity-40" : "from-primary/30 to-primary/20"}
                     rounded-lg hover:cursor-pointer
                     ${todo.priority ? priorityBorderColors[todo.priority] : ""}
                     transition-all duration-200 
@@ -109,10 +109,15 @@ export function TodoItem({ todo }: { todo: Todo; delay: number }) {
           <div className="flex items-center gap-4 truncate  flex-wrap">
             {todo.dueDate && daysLeft !== null && (
               <span
-                className={`text-xs px-4 py-2 rounded-md ${getDaysLeftStyles(daysLeft)} font-medium flex items-center gap-1.5 shrink-0`}
+                className={`text-xs px-4 py-2 rounded-md ${getDaysLeftStyles(daysLeft)}  font-medium flex items-center gap-1.5 shrink-0`}
               >
+                {isOverdue(daysLeft) !== true && (
+                  <Clock
+                    className={`w-4 h-4 ${daysLeft === 1 ? "text-med-priority" : daysLeft === 0 ? "text-high-priority " : ""}`}
+                  />
+                )}
                 {isOverdue(daysLeft) && (
-                  <TriangleAlert className="w-5 h-5 text-high-priority" />
+                  <TriangleAlert className="w-5 h-5 text-high-priority " />
                 )}
                 {getDaysLeftText(daysLeft)}
               </span>

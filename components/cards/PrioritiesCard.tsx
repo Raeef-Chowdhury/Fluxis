@@ -29,7 +29,7 @@ export function PrioritiesCard({
       <div
         onClick={() => setModalId(todo.id)}
         key={todo.id}
-        className={`border-l-2 flex flex-col gap-4 ${colors.border} bg-secondary/10 rounded-lg p-6 hover:bg-secondary/20 transition-all duration-200 cursor-pointer relative group`}
+        className={`border-l-2 flex flex-col gap-4 ${colors.border} bg-secondary/25 rounded-lg p-6 hover:bg-secondary/40 transition-all duration-200 cursor-pointer relative group`}
       >
         {todo.priority && (
           <span

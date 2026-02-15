@@ -12,10 +12,10 @@ export function DueDateCalendar({
       value={dueDate}
       onChange={(e) => setDueDate(e.target.value)}
       type="date"
-      className="  appearance-none bg-gradient-to-br from-secondary/10 to-primary/5 border border-secondary/20 rounded-lg px-3 py-2 pr-9  text-sm text-white/50 hover:text-white focus:text-white  cursor-pointer
+      className="  appearance-none bg-gradient-to-br from-secondary/40 to-primary/20 border border-secondary/20 rounded-lg px-6 py-2 pr-9  text-md text-white/80 hover:text-white focus:text-white  cursor-pointer
       transition-all duration-200
-focus:bg-secondary/20 hover:bg-secondary/15
-      hover:border-secondary/40
+focus:bg-secondary/60 hover:bg-secondary/50
+      hover:border-white/50
       focus:outline-none
       focus:border-secondary
     "

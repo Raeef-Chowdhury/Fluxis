@@ -1,5 +1,5 @@
-import OptionalTags from "@/components/tasks/form/OptionalTags";
-import { OptionalField } from "@/components/tasks/form/OptionalFields";
+import { OptionalTags } from "@/components/tasks/form/ui/OptionalTags";
+import { OptionalField } from "@/components/tasks/form/ui/OptionalField";
 import { AddTask } from "./AddTaskInput";
 import { DueDateForm } from "@/components/tasks/form/ui/PriorityDropdown";
 import { motion, AnimatePresence } from "framer-motion";

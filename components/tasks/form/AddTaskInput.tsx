@@ -37,10 +37,10 @@ export function AddTask({
           onChange={(e) => setTitle(e.target.value)}
           onFocus={() => setIsFocused(true)}
           placeholder="Add a new task..."
-          className="w-[85%] bg-gradient-to-br from-secondary/15 to-primary/10
+          className="w-[85%] bg-gradient-to-br from-secondary/35 to-primary/20
             border border-secondary/20 rounded-xl px-5 py-3.5 text-base
-            text-white placeholder:text-primary/70
-            focus:outline-none focus:border-secondary/80
+            text-white placeholder:text-primary
+            focus:outline-none focus:border-secondary
             transition-all duration-300"
         />
         <button
