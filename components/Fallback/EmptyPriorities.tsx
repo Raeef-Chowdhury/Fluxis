@@ -1,4 +1,5 @@
 import { Target, Plus } from "lucide-react";
+import Link from "next/link";
 export function EmptyPriorities() {
   return (
     <div className="flex flex-col border-primary/10 bg-accent/10 border-2 border-solid rounded-sm items-center  py-8 px-3 text-center">
@@ -14,11 +15,12 @@ export function EmptyPriorities() {
         Set your top 3 priorities. Choose tasks from your task list or create
         new ones.
       </p>
-
-      <button className="px-6 py-3 hover:cursor-pointer bg-primary/20 text-primary rounded-lg font-medium hover:bg-primary/30 transition-colors flex items-center gap-2">
-        <Plus className="w-6 h-6" strokeWidth={2} />
-        Add Your First Priority
-      </button>
+      <Link href="/tasks">
+        <button className="px-6 py-3 hover:cursor-pointer bg-primary/20 text-primary rounded-lg font-medium hover:bg-primary/30 transition-colors flex items-center gap-2">
+          <Plus className="w-6 h-6" strokeWidth={2} />
+          Add Your First Priority
+        </button>
+      </Link>
     </div>
   );
 }

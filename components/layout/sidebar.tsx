@@ -4,15 +4,7 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  Home,
-  Settings,
-  FileText,
-  BookOpen,
-  Menu,
-  ChevronsLeft,
-  ListCheck,
-} from "lucide-react";
+import { Home, Menu, ChevronsLeft, ListCheck } from "lucide-react";
 
 function SideBar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,9 +18,6 @@ function SideBar() {
   };
   const menuItems = [
     { icon: Home, label: "Home", href: "/" },
-    { icon: FileText, label: "Projects", href: "/projects" },
-    { icon: BookOpen, label: "Resources", href: "/resources" },
-    { icon: Settings, label: "Settings", href: "/settings" },
     { icon: ListCheck, label: "Tasks", href: "/tasks" },
   ];
 

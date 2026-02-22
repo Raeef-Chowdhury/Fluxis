@@ -5,6 +5,8 @@ import { RenderTaskFilters } from "@/components/tasks/form/RenderTaskFilters";
 import TaskForm from "@/components/tasks/form/RenderTaskForm";
 import { RenderTaskList } from "@/components/tasks/form/RenderTaskList";
 import { TasksStats } from "@/components/tasks/stats/TasksStats";
+import { TaskAddedToast } from "@/components/tasks/stats/TaskAddedToast";
+import { AnimatePresence } from "framer-motion";
 
 function Tasks() {
   const {
@@ -25,10 +27,15 @@ function Tasks() {
     setPriority,
     setDueDate,
     dueDate,
+    taskAdded,
+    toastTitle,
   } = useTaskForm();
 
   return (
     <section className="w-full  mt-6  pb-24">
+      <AnimatePresence>
+        {taskAdded && <TaskAddedToast title={toastTitle} />}
+      </AnimatePresence>
       <h1 className="tracking-tight text-5xl font-bold text-center mb-12">
         Tasks
       </h1>

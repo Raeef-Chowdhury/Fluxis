@@ -1,6 +1,7 @@
 import { useTodos } from "@/hooks/Todo/TodoItem";
 import { Plus, ChevronRight } from "lucide-react";
 import { Todo } from "@/Types/TodoItemTypes";
+import Link from "next/link";
 export function IncompletePriorities() {
   const { todos } = useTodos();
   const length = todos.filter((todo: Todo) => !todo.completed).length;
@@ -12,9 +13,11 @@ export function IncompletePriorities() {
       <p className="text-[1rem] text-center  tracking-widest leading-loose text-text/90">
         Add Priority #{1 + length}
       </p>
-      <button className="bg-primary/90 hover:bg-primary/80 flex gap-2 items-center  hover:gap-4 hover:cursor-pointer  duration-300 px-4 py-2 text-black mx-auto rounded-2xl">
-        Add More Priorities <ChevronRight className="w-4 h-4" />
-      </button>
+      <Link href="/tasks">
+        <button className="bg-primary/90 hover:bg-primary/80 flex gap-2 items-center  hover:gap-4 hover:cursor-pointer  duration-300 px-4 py-2 text-black mx-auto rounded-2xl">
+          Add More Priorities <ChevronRight className="w-4 h-4" />
+        </button>
+      </Link>
     </div>
   );
 }

@@ -19,6 +19,9 @@ export function useTaskForm() {
   const [showTags, setShowTags] = useState<boolean>(false);
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
+  const [taskAdded, setTaskAdded] = useState<boolean>(false);
+  const [toastTitle, setToastTitle] = useState<string>("");
+
   const [sortBy, setSortBy] = useState<string>("dueDate");
   const { todos, addTodo } = useTodos();
   const filteredTodos = useTodoFilter({ todos, filter });
@@ -68,7 +71,9 @@ export function useTaskForm() {
 
     const tagsArray = tags.split(",").map((tag) => tag.trim());
     addTodo(title, priority as Priority, dueDate, tagsArray);
-
+    setTaskAdded(true);
+    setTimeout(() => setTaskAdded(false), 3000);
+    setToastTitle(title);
     setTitle("");
     setPriority("");
     setDueDate("");
@@ -95,5 +100,7 @@ export function useTaskForm() {
     setPriority,
     dueDate,
     setDueDate,
+    toastTitle,
+    taskAdded,
   };
 }

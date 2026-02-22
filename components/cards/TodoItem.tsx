@@ -34,10 +34,19 @@ export function TodoItem({ todo }: { todo: Todo; delay: number }) {
   return (
     <>
       <motion.li
-        layout
+        layout="position"
+        layoutId={todo.id}
         initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: todo.completed ? 0.4 : 1, y: 0 }}
-        exit={{ opacity: 0, y: -10 }}
+        animate={{ opacity: todo.completed ? 0.4 : 1, height: "auto" }}
+        exit={{
+          opacity: 0,
+          y: -10,
+          height: 0,
+          marginBottom: 0,
+          paddingTop: 0,
+          paddingBottom: 0,
+          position: "relative",
+        }}
         transition={{ duration: 0.2 }}
         onClick={() => setModalId(todo.id)}
         className={`bg-gradient-to-br ${todo.completed ? "from-primary/15 to-primary/5 opacity-40" : "from-primary/30 to-primary/20"}
